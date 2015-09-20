@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+                        http://www.springframework.org/schema/security 
+                        http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+	<http pattern="/template/**" security="none" />
+	<http pattern="/WEB-INF/pages/login.html" security="none" />
+	<http pattern="/toLogin.htm" security="none" />
+	<http pattern="/404.htm" security="none" />
+	<http pattern="/403.htm" security="none" />
+	<http pattern="/500.htm" security="none" />
+	<http use-expressions='true' entry-point-ref="sysAuthenticationEntryPoint">
+		<intercept-url pattern="/**" access="authenticated" />
+
+		<access-denied-handler ref="accessDeniedHandler" />
+		<csrf disabled="true" />
+		<!-- 登出管理 -->
+		<logout invalidate-session="true" logout-url="/j_spring_security_logout" />
+		<!-- 实现免登陆验证 -->
+		<remember-me />
+
+		<!-- 会话管理 -->
+		<session-management
+			session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+
+		<!-- 认证和授权 -->
+		<custom-filter ref="sysAuthenticationFilter" position="FORM_LOGIN_FILTER" />
+		<custom-filter ref="conCurrencyFilter" position="CONCURRENT_SESSION_FILTER" />
+		<custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+	</http>
+
+	<!-- 未登录的切入点 -->
+	<beans:bean id="sysAuthenticationEntryPoint"
+		class="org.quick.sys.security.SmartLoginUrlAuthenticationEntryPoint">
+		<beans:constructor-arg name="loginFormUrl"
+			value="/toLogin.htm" />
+	</beans:bean>
+
+	<!-- 自定义权限不足处理程序 -->
+	<beans:bean id="accessDeniedHandler"
+		class="org.quick.sys.security.AccessDeniedHandlerImpl">
+		<beans:property name="errorPage" value="/500.html"></beans:property>
+	</beans:bean>
+
+	<!-- 登录验证器：用户有没有登录的资格 -->
+	<beans:bean id="sysAuthenticationFilter"
+		class="org.quick.sys.security.CustomAuthenticationFilter">
+		<beans:property name="authenticationManager" ref="sysAuthenticationManager" />
+		<beans:property name="filterProcessesUrl" value="/j_spring_security_check" />
+		<beans:property name="authenticationSuccessHandler">
+			<beans:bean
+				class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+				<beans:property name="defaultTargetUrl" value="/index.htm" />
+			</beans:bean>
+		</beans:property>
+		<beans:property name="authenticationFailureHandler">
+			<beans:bean
+				class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+				<beans:property name="defaultFailureUrl" value="/toLogin.htm?login_error=1" />
+			</beans:bean>
+		</beans:property>
+		<!-- sessionManagementFilter 单点登录 -->
+		<beans:property name="sessionAuthenticationStrategy"
+			ref="sessionAuthenticationStrategy" />
+	</beans:bean>
+
+	<!-- 认证过滤器 -->
+	<beans:bean id="securityFilter" class="org.quick.sys.security.CustomSecurityFilter">
+		<!-- 用户拥有的权限 -->
+		<beans:property name="authenticationManager" ref="sysAuthenticationManager" />
+		<!-- 用户是否拥有所请求资源的权限 -->
+		<beans:property name="accessDecisionManager" ref="sysAccessDecisionManager" />
+		<!-- 资源与权限对应关系 -->
+		<beans:property name="securityMetadataSource" ref="sysSecurityMetadataSource" />
+	</beans:bean>
+
+	<!-- 实现了UserDetailsService的Bean -->
+	<authentication-manager alias="sysAuthenticationManager">
+		<authentication-provider ref="authenticationProvider" />
+	</authentication-manager>
+
+	<beans:bean id="authenticationProvider"
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="sysUserDetailService" />
+		<beans:property name="hideUserNotFoundExceptions"
+			value="false" />
+		<beans:property name="passwordEncoder" ref="passwordEncoder" />
+	</beans:bean>
+
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.PlaintextPasswordEncoder">
+		<beans:property name="ignorePasswordCase" value="true" />
+	</beans:bean>
+
+	<beans:bean id="sysAccessDecisionManager"
+		class="org.quick.sys.security.AccessDecisionManagerImpl" />
+
+	<beans:bean id="sysSecurityMetadataSource"
+		class="org.quick.sys.security.SecurityMetadataSourceImpl">
+		<beans:property name="webResourceDao" ref="webResourceDao" />
+	</beans:bean>
+
+	<beans:bean id="sysUserDetailService"
+		class="org.quick.sys.security.UserDetailServiceImpl">
+		<beans:property name="webUserDao" ref="webUserDao" />
+	</beans:bean>
+
+	<beans:bean id="sessionRegistry"
+		class="org.springframework.security.core.session.SessionRegistryImpl" />
+
+	<!-- sessionManagementFilter 单点登录 -->
+	<beans:bean id="conCurrencyFilter"
+		class="org.springframework.security.web.session.ConcurrentSessionFilter">
+		<beans:constructor-arg name="sessionRegistry"
+			ref="sessionRegistry" />
+		<beans:constructor-arg name="expiredUrl" value="/404.html" />
+	</beans:bean>
+
+
+	<beans:bean id="sessionAuthenticationStrategy"
+		class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+		<beans:constructor-arg name="sessionRegistry"
+			ref="sessionRegistry" />
+		<beans:property name="maximumSessions" value="1" />
+	</beans:bean>
+
+
+	<!-- 定义国际化 -->
+	<beans:bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<beans:property name="basename" value="classpath:messages_zh_CN" />
+	</beans:bean>
+</beans:beans>
