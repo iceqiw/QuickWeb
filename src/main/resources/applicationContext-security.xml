@@ -6,14 +6,11 @@
                         http://www.springframework.org/schema/security 
                         http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 	<http pattern="/template/**" security="none" />
-	<http pattern="/WEB-INF/pages/login.html" security="none" />
-	<http pattern="/toLogin.htm" security="none" />
-	<http pattern="/404.htm" security="none" />
-	<http pattern="/403.htm" security="none" />
-	<http pattern="/500.htm" security="none" />
+	<http pattern="/*.css" security="none" />
+	<http pattern="/*.ico" security="none" />
+	<http pattern="/toLogin" security="none" />
 	<http use-expressions='true' entry-point-ref="sysAuthenticationEntryPoint">
 		<intercept-url pattern="/**" access="authenticated" />
-
 		<access-denied-handler ref="accessDeniedHandler" />
 		<csrf disabled="true" />
 		<!-- 登出管理 -->
@@ -35,7 +32,7 @@
 	<beans:bean id="sysAuthenticationEntryPoint"
 		class="org.quick.sys.security.SmartLoginUrlAuthenticationEntryPoint">
 		<beans:constructor-arg name="loginFormUrl"
-			value="/toLogin.htm" />
+			value="/toLogin" />
 	</beans:bean>
 
 	<!-- 自定义权限不足处理程序 -->
@@ -52,13 +49,13 @@
 		<beans:property name="authenticationSuccessHandler">
 			<beans:bean
 				class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
-				<beans:property name="defaultTargetUrl" value="/index.htm" />
+				<beans:property name="defaultTargetUrl" value="/index" />
 			</beans:bean>
 		</beans:property>
 		<beans:property name="authenticationFailureHandler">
 			<beans:bean
 				class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-				<beans:property name="defaultFailureUrl" value="/toLogin.htm?login_error=1" />
+				<beans:property name="defaultFailureUrl" value="/toLogin?login_error=1" />
 			</beans:bean>
 		</beans:property>
 		<!-- sessionManagementFilter 单点登录 -->

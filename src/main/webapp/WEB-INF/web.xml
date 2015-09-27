@@ -25,7 +25,37 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!-- 静态文件的访问交由默认的servlet进行处理 -->
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.css</url-pattern>
+		<url-pattern>*.js</url-pattern>
+		<url-pattern>*.ico</url-pattern>
+		<url-pattern>*.swf</url-pattern>
+		<url-pattern>*.gif</url-pattern>
+		<url-pattern>*.jpeg</url-pattern>
+		<url-pattern>*.bmp</url-pattern>
+		<url-pattern>*.psd</url-pattern>
+		<url-pattern>*.jpg</url-pattern>
+		<url-pattern>*.png</url-pattern>
 		<url-pattern>*.htm</url-pattern>
+		<url-pattern>*.html</url-pattern>
+		<url-pattern>*.crx</url-pattern>
+		<url-pattern>*.xpi</url-pattern>
+		<url-pattern>*.exe</url-pattern>
+		<url-pattern>*.ipa</url-pattern>
+		<url-pattern>*.apk</url-pattern>
+		<url-pattern>*.htc</url-pattern>
+		<url-pattern>*.xml</url-pattern>
+		<url-pattern>*.woff</url-pattern>
+		<url-pattern>*.ttf</url-pattern>
+		<url-pattern>*.map</url-pattern>
+		<url-pattern>*.woff2</url-pattern>
+		<url-pattern>*.eot</url-pattern>
+		<url-pattern>*.svg</url-pattern>
 	</servlet-mapping>
 
 	<filter>
@@ -40,7 +70,7 @@
 		<filter-name>openSessionInViewFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<!-- 必须要在struts拦截器之前 -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
@@ -81,10 +111,6 @@
 		<description>request监听器</description>
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
-	<!-- Spring 刷新Introspector防止内存泄露 -->
-	<listener>
-		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-	</listener>
 	<listener>
 		<description>Spring security多次登监听器</description>
 		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
@@ -96,7 +122,7 @@
 	</session-config>
 
 	<welcome-file-list>
-		<welcome-file>/toLogin.htm</welcome-file>
+		<welcome-file>/index.html</welcome-file>
 	</welcome-file-list>
 
 	<error-page>

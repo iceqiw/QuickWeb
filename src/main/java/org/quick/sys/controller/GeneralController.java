@@ -8,15 +8,20 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class GeneralController {
 
-	@RequestMapping(value = "/toLogin.htm")
+	@RequestMapping(value = "/toLogin")
 	public ModelAndView index_sys(Model model) {
 		ModelAndView m=new ModelAndView("login");
 		return m;
 	}
 	
-	@RequestMapping(value = "/index.htm")
+	@RequestMapping({"/index","/",""})
 	public ModelAndView index_user(Model model) {
 		ModelAndView m=new ModelAndView("index");
 		return m;
 	}
+	
+	 @RequestMapping("/test") 
+	    public void test() throws Exception {   
+	        throw new Exception("出错了！");   
+	    }   
 }
