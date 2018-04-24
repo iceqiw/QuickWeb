@@ -1,5 +1,6 @@
 server:
-  context-path: ${appName}
+  servlet:
+    context-path: /${appName}
   port: @port@
 
 
