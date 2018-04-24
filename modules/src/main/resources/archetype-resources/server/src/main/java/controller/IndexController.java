@@ -3,19 +3,24 @@
 #set( $symbol_escape = '\' )
 package ${package}.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import ${package}.api.IndexAPI;
+import ${package}.mapper.DemoMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 /**
- * home constroller
+ * ${artifactId} constroller
  *
- * @author chris.zhai
+ * @author qiwei
  * @create 2018/01/27
  **/
 @RestController
 @Slf4j
 public class IndexController implements IndexAPI {
 
+
+    @Autowired
+    DemoMapper demoMapper;
 
     @Override
     public String index(){

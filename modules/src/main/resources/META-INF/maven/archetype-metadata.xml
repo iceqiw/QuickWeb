@@ -15,7 +15,7 @@
   <modules>
     <module id="server" dir="server" name="server">
       <fileSets>
-        <fileSet filtered="true"  encoding="UTF-8">
+        <fileSet filtered="true" encoding="UTF-8">
           <directory>envs</directory>
           <includes>
             <include>**/*.properties</include>
@@ -44,10 +44,11 @@
           </includes>
         </fileSet>
 
-        <fileSet encoding="UTF-8">
+        <fileSet filtered="true" encoding="UTF-8">
           <directory></directory>
           <includes>
-            <include>gitignore</include>
+            <include>buildDocker.sh</include>
+            <include>Dockerfile</include>
           </includes>
         </fileSet>
       </fileSets>
@@ -76,10 +77,10 @@
   <requiredProperties>
     <requiredProperty key="appName"/>
     <requiredProperty key="groupId">
-      <defaultValue>com.cwgj</defaultValue>
+      <defaultValue>com.gofine</defaultValue>
     </requiredProperty>
     <requiredProperty key="artifactId">
-      <defaultValue>cwgj-${appName}</defaultValue>
+      <defaultValue>gofine-${appName}</defaultValue>
     </requiredProperty>
     <requiredProperty key="version">
       <defaultValue>1.0.0</defaultValue>

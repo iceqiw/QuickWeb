@@ -3,15 +3,12 @@
 #set( $symbol_escape = '\' )
 package ${package}.mapper;
 
+import ${package}.common.model.Demo;
+import java.util.List;
+import org.apache.ibatis.annotations.Select;
+
 public interface DemoMapper {
 
-    void insert();
-
-    void update();
-
-    void deleteById(Integer id);
-
-    //Demo findById(Integer id);
-
-    //List<Demo> selectByExample();
+    @Select("select * from t_user_demo_info")
+    List<Demo> selectAll();
 }

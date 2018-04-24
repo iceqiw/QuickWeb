@@ -118,6 +118,21 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>1.0.0</version>
+        <configuration>
+          <imageName>cloud/${rootArtifactId}</imageName>
+          <dockerDirectory>${project.basedir}/</dockerDirectory>
+          <resources>
+            <resource>
+              <directory>${project.build.directory}</directory>
+              <include>${project.build.finalName}.jar</include>
+            </resource>
+          </resources>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 

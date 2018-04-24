@@ -1,5 +1,7 @@
 server:
+  context-path: ${appName}
   port: @port@
+
 
 spring:
   application:
