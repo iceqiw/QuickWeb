@@ -1,0 +1,16 @@
+server:
+  port: @port@
+
+spring:
+  application:
+    name: ${rootArtifactId}
+  cloud:
+    config:
+      uri: @cloud.config@
+      profile: dev
+      label: master
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: @eureka.host@

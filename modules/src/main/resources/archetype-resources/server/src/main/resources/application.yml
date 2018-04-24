@@ -1,0 +1,16 @@
+server:
+  port: @port@
+
+spring:
+  application:
+    name: ${rootArtifactId}
+  redis:
+      host: @redis.host@
+      port: @redis.port@
+  datasource:
+    url: @mysql.jdbc.url@
+    username: @mysql.jdbc.username@
+    password: @mysql.jdbc.password@
+    driver-class-name: @driverclass@
+    maxActive: 2
+    initialSize: 1
