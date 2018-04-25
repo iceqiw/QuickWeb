@@ -8,7 +8,7 @@
     <fileSet encoding="UTF-8">
       <directory></directory>
       <includes>
-        <include>gitignore</include>
+        <include>.gitignore</include>
         <include>buildDocker.sh</include>
       </includes>
     </fileSet>
