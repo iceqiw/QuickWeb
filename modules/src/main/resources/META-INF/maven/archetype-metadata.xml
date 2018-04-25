@@ -10,7 +10,6 @@
       <includes>
         <include>gitignore</include>
         <include>buildDocker.sh</include>
-        <include>Dockerfile</include>
       </includes>
     </fileSet>
   </fileSets>
@@ -50,6 +49,7 @@
           <directory></directory>
           <includes>
             <include>devbuildDocker.sh</include>
+            <include>Dockerfile</include>
           </includes>
         </fileSet>
       </fileSets>

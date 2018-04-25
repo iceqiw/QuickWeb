@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build -t ${rootArtifactId} .
+docker build -t ${rootArtifactId} server/
