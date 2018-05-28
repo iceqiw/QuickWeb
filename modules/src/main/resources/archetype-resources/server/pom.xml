@@ -23,7 +23,7 @@
     <targetMapperPackage>${groupId}.${appName}.mapper</targetMapperPackage>
     <targetModelPackage>${groupId}.${appName}.common.model</targetModelPackage>
     <!--  XML生成路径  -->
-    <targetResourcesProject>${basedir}/src/main/java/</targetResourcesProject>
+    <targetResourcesProject>${basedir}/src/main</targetResourcesProject>
     <targetXMLPackage>mapping</targetXMLPackage>
     <mysql.version>5.1.45</mysql.version>
 
