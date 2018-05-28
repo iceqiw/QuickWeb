@@ -16,6 +16,18 @@
   <name>${rootArtifactId}-${artifactId}</name>
   <url>http://maven.apache.org</url>
 
+  <properties>
+    <!--  MyBatis Generator  -->
+    <!--  Java接口和实体类  -->
+    <targetJavaProject>${basedir}/src/main/java</targetJavaProject>
+    <targetMapperPackage>${groupId}.${appName}.mapper</targetMapperPackage>
+    <targetModelPackage>${groupId}.${appName}.common.model</targetModelPackage>
+    <!--  XML生成路径  -->
+    <targetResourcesProject>${basedir}/src/main/java/</targetResourcesProject>
+    <targetXMLPackage>mapping</targetXMLPackage>
+    <mysql.version>5.1.45</mysql.version>
+
+  </properties>
 
   <dependencies>
     <dependency>
@@ -112,6 +124,11 @@
         <!-- 在某个resource中如果设置filtering为true，将会根据输入参数动态修改相关内容。 -->
         <filtering>true</filtering>
       </resource>
+      <resource>
+        <directory>src/main/mapping</directory>
+        <!-- 在某个resource中如果设置filtering为true，将会根据输入参数动态修改相关内容。 -->
+        <filtering>false</filtering>
+      </resource>
     </resources>
     <plugins>
       <plugin>
@@ -132,6 +149,23 @@
             </resource>
           </resources>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-maven-plugin</artifactId>
+        <version>1.3.6</version>
+        <configuration>
+          <configurationFile>${basedir}/src/main/resources/generatorConfig.xml</configurationFile>
+          <overwrite>true</overwrite>
+          <verbose>true</verbose>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
