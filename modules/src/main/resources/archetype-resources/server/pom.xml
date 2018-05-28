@@ -23,7 +23,7 @@
     <targetMapperPackage>${groupId}.${appName}.mapper</targetMapperPackage>
     <targetModelPackage>${groupId}.${appName}.common.model</targetModelPackage>
     <!--  XML生成路径  -->
-    <targetResourcesProject>${basedir}/src/main</targetResourcesProject>
+    <targetResourcesProject>${basedir}/src/main/sql</targetResourcesProject>
     <targetXMLPackage>mapping</targetXMLPackage>
     <mysql.version>5.1.45</mysql.version>
 
@@ -125,7 +125,7 @@
         <filtering>true</filtering>
       </resource>
       <resource>
-        <directory>src/main/mapping</directory>
+        <directory>src/main/sql</directory>
         <!-- 在某个resource中如果设置filtering为true，将会根据输入参数动态修改相关内容。 -->
         <filtering>false</filtering>
       </resource>

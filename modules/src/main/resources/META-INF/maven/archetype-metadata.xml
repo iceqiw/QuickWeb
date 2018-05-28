@@ -39,7 +39,7 @@
         </fileSet>
 
         <fileSet filtered="true" encoding="UTF-8">
-          <directory>src/main/mapping</directory>
+          <directory>src/main/sql</directory>
           <includes>
             <include>**/*.yml</include>
             <include>**/*.txt</include>
