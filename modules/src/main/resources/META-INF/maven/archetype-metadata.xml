@@ -38,6 +38,15 @@
           </includes>
         </fileSet>
 
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src/main/mapping</directory>
+          <includes>
+            <include>**/*.yml</include>
+            <include>**/*.txt</include>
+            <include>**/*.xml</include>
+          </includes>
+        </fileSet>
+
         <fileSet filtered="true" packaged="true" encoding="UTF-8">
           <directory>src/test/java</directory>
           <includes>
