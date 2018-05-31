@@ -14,3 +14,6 @@ eureka:
   client:
     serviceUrl:
       defaultZone: @eureka.host@
+
+mybatis:
+   mapper-locations: classpath:mapping/*.xml
